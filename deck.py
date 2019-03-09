@@ -3,7 +3,7 @@ import json
 from cards import Card
 
 class Deck():
-    def __init__(self, file):
+    def __init__(self, file, expantions):
         with open(file) as f:
             cards = json.load(f)
 
@@ -11,6 +11,8 @@ class Deck():
         self.answers = []
 
         for card in cards:
+            if card['expansion'] not in expantions:
+                continue                
             if card['cardType'] == 'Q':
                 self.questions.append(
                     Card(
@@ -39,6 +41,12 @@ class Deck():
         self.questions_pile = []
         self.answers_pile = []
     
+    def __str__(self):
+        q = [card.text for card in self.questions]
+        a = [card.text for card in self.questions]
+        deck = q + a
+        return str(deck)
+    
     def draw_question(self):
         return self.questions.pop()
 
@@ -53,27 +61,4 @@ class Deck():
         self.answers += self.answers_pile
         random.shuffle(self.answers)
 
-class Player():
-    def __init__(self, deck, size = 5, cardmaster = False):
-        self.score = 0
-        self.deck = deck
-        self.hand = []
-        for _ in range(size):
-            self.hand.append(deck.draw_answer())
-    
-    def __len__(self):
-        return len(self.hand)
-    
-    def display_hand(self):
-        hand = []
-        for idx, card in enumerate(self.hand):
-            hand.append((idx, card['text']))
-        return hand
 
-    def play_card(self, card):
-        selected = self.hand.pop(card)
-        self.deck.answers_pile.append(selected)
-        return selected
-    
-    def draw_card(self):
-        self.hand.append(self.deck.draw_answer())

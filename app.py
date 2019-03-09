@@ -1,32 +1,27 @@
-from cards import questions, answers, Card
-from deck import Deck, Player
+from cards import Card
+from deck import Deck
+from player import Player
 import json
 
 
 
-
-
-
-p1 = Player(deck, size=5)
-p2 = Player(deck, size=5)
-p3 = Player(deck, size=5)
-
-print(p1.display_hand())
-print(p2.display_hand())
-print(p3.display_hand())
-print()
-print(deck.draw_question()['text'])
-p1.play_card(1)
-print(len(p1))
-
-
 class Game:
-    def __init__(self, numPlayers = 3, handSize = 5, expantions = ['Base']):
-        self.deck = Deck(questions, answers)
+    def __init__(self, cardfile, numPlayers = 3, handSize = 5, expantions = ['Base']):
+        self.deck = Deck(cardfile, expantions)
         self.players = [Player(self.deck, size=handSize) for _ in range(numPlayers)]
+        self.players[0].cardmaster = True
     
     def run(self):
-        pass
+        for player in self.players:
+            print(player.display_hand())
+            print(player.cardmaster)
+            print(self.deck)
+    
+    
+            
+
+game = Game("cards.json")
+game.run()
 
 
 '''

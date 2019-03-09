@@ -8,15 +8,3 @@ class Card:
         self.numAnswers = numAnswers
         self.expansion = expansion
 
-with open('cards.json') as f:
-    cards = json.load(f)
-
-questions = []
-answers = []
-
-for card in cards:
-    if card['cardType'] == 'Q':
-        questions.append(card)
-    elif card['cardType'] == 'A':
-        answers.append(card)
-
