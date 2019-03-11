@@ -48,8 +48,6 @@ class Deck():
     
     def deal(self, players, num_cards=5):
         num_players = len(players)
-        print(f"nump: {num_players}")
-        print(f"deck: {len(self.deck)}")
         for i in range(num_cards*num_players):
             if len(self.deck) <= 0: break      # break if out of cards
             card = self.draw_card()            # take the top card

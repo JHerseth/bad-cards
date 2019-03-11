@@ -18,15 +18,35 @@ class Game:
         self.players.append(Player(name))
     
     def run(self):
-        self.answers.deal(self.players, num_cards=5)
-
+        self.answers.deal(self.players, num_cards=8)
+        question = self.questions.draw_card()
+        print(question)
+        print("------------")
         # playedCard = self.questions.draw_card()
         # print(f"{playedCard}")
         # print(f"Chose {playedCard.numAnswers} card{'s' if playedCard.numAnswers > 1 else ''}.")
         # for _ in range(playedCard.numAnswers):
         #     pass
         for player in self.players:
-            print(player.display_hand())
+            self.turn(player, question)
+            
+    
+    def turn(self, player, question):
+        print(f"{player.name}'s turn")
+        print("Your hand:")
+        print(player.display_hand())
+        
+        if question.numAnswers > 1:
+            print(f"Select {question.numAnswers} cards")
+        else:
+            print(f"Select card")
+        
+        i = 0
+        while i < question.numAnswers:
+            chosencard = input("Card no: ")
+            i += 1
+        print("")
+
 
             
     
@@ -38,7 +58,14 @@ for name in names:
     game.addPlayer(name)
 game.run()
 
-
+p1 = Player("Mika")
+p1.score = 2
+p2 = Player("Jonas")
+p2.score = 1
+print(p1 > p2)
+print(p1 == p2)
+print(p1 < p2)
+print(max(p1,p2).name)
 '''
 Game Loop:
     Deal cards
