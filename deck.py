@@ -1,6 +1,7 @@
 import random
 import json
-from cards import Card
+from card import Card
+
 
 class Deck():
     """Deck object to hold cards and do deck operations like dealing and shuffling.
@@ -11,7 +12,8 @@ class Deck():
         expansions
 
     """
-    def __init__(self, file, type, expansions = ['Base']):
+
+    def __init__(self, file, type, expansions=['Base']):
         with open(file) as f:
             cards = json.load(f)
 
@@ -20,7 +22,7 @@ class Deck():
 
         for card in cards:
             if card['expansion'] not in expansions:
-                continue                
+                continue
             if card['cardType'] == type:
                 self.deck.append(
                     Card(
@@ -29,30 +31,28 @@ class Deck():
                         card['text'],
                         card['numAnswers'],
                         card['expansion'],
-                        )
                     )
-    
+                )
+
     def __str__(self):
         deck = [str(card) for card in self.deck]
         return f"{deck}"
-    
+
     def draw_card(self):
         return self.deck.pop()
 
     def shuffle_deck(self):
         random.shuffle(self.deck)
-    
+
     def reset_deck(self):
         self.deck += self.spent_pile
         self.shuffle_deck()
-    
+
     def deal(self, players, num_cards=5):
         num_players = len(players)
         for i in range(num_cards*num_players):
-            if len(self.deck) <= 0: break      # break if out of cards
+            if len(self.deck) <= 0:
+                break      # break if out of cards
             card = self.draw_card()            # take the top card
             player = players[i % num_players]  # whose turn is next?
             player.add_card(card)              # add the card to the hand
-    
-
-
