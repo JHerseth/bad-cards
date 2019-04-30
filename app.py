@@ -13,10 +13,10 @@ class Game:
         self.players    = []
         self.questions.shuffle_deck()
         self.answers.shuffle_deck()
-    
+
     def addPlayer(self, name):
         self.players.append(Player(name))
-    
+
     def run(self):
         self.answers.deal(self.players, num_cards=8)
         question = self.questions.draw_card()
@@ -29,18 +29,18 @@ class Game:
         #     pass
         for player in self.players:
             self.turn(player, question)
-            
-    
+
+
     def turn(self, player, question):
         print(f"{player.name}'s turn")
         print("Your hand:")
         print(player.display_hand())
-        
+
         if question.numAnswers > 1:
             print(f"Select {question.numAnswers} cards")
         else:
             print(f"Select card")
-        
+
         i = 0
         while i < question.numAnswers:
             chosencard = input("Card no: ")
@@ -48,10 +48,6 @@ class Game:
         print("")
 
 
-            
-    
-
-            
 
 game = Game("cards.json")
 for name in names:
